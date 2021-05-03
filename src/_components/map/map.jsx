@@ -14,7 +14,7 @@ function MapPosition({ positions }) {
   useEffect(() => {
     const listener = (e) => {
       if (e.key === "Escape") {
-        setIsPopup(false);
+        setSelectedPosition(null);
       }
     };
     window.addEventListener("keydown", listener);
@@ -41,7 +41,7 @@ function MapPosition({ positions }) {
               setSelectedPosition(position);
             }}
             icon={{
-              url: "https://img.icons8.com/color/48/000000/map-pin.png",
+              url: "https://developers.google.com/maps/images/maps-icon.svg",
               scaledSize: new window.google.maps.Size(50, 50),
             }}
           />

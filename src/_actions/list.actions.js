@@ -1,9 +1,10 @@
 import { listConstants } from '../_constants';
 import { listService } from '../_services';
+import {positionsService} from '../_services';
 
 export const listActions = {
     getAll,
-    delete: _delete
+    delete: _delete,
 };
 
 function getAll() {
@@ -26,7 +27,6 @@ function getAll() {
 function _delete(id) {
     return dispatch => {
         dispatch(request(id));
-
         listService.delete(id)
             .then(
                 list => dispatch(success(id)),

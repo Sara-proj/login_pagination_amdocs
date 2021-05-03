@@ -7,7 +7,7 @@ const propTypes = {
     items: PropTypes.array.isRequired,
     onChangePage: PropTypes.func.isRequired,
     initialPage: PropTypes.number,
-    //pageSize: PropTypes.number,
+    pageSize: PropTypes.number,
     maxPages: PropTypes.number,
     labels: PropTypes.object,
     styles: PropTypes.object,
@@ -16,7 +16,7 @@ const propTypes = {
 
 const defaultProps = {
     initialPage: 1,
-   // pageSize: 10,
+    pageSize: 10,
     maxPages: 10,
     labels: {
         first: 'First',
@@ -30,7 +30,7 @@ class Pagination extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { pager: {},pageSize:10 };
+        this.state = { pager: {} };
         this.styles = {};
 
         if (!props.disableDefaultStyles) {
@@ -50,7 +50,7 @@ class Pagination extends React.Component {
                     padding: '6px 12px',
                     display: 'block',
                     float: 'left',
-                    border:"solid black 2px"
+                    border: "solid black 2px"
                 }
             }
         }
@@ -63,7 +63,7 @@ class Pagination extends React.Component {
                 a: { ...this.styles.a, ...props.styles.a }
             };
         }
-        this.changePageSize=this.changePageSize.bind(this);
+        this.changePageSize = this.changePageSize.bind(this);
     }
 
     componentWillMount() {
@@ -82,15 +82,15 @@ class Pagination extends React.Component {
 
     changePageSize(event) {
         var pager = this.state.pager;
-        this.setState({pageSize:event.target.value});
-        this.setPage(pager.currentPage,event.target.value);
-    
+        this.setState({ pager: { ...pager, pageSize: +event.target.value } }, () => {
+            this.setPage(pager.currentPage);
+        });
     }
 
-    setPage(page,size) {
+    setPage(page) {
         var { items, maxPages } = this.props;
         var pager = this.state.pager;
-        var pageSize=size?size:this.state.pageSize;
+        var pageSize = pager.pageSize || this.props.pageSize;
         // get new pager object for specified page
         pager = paginateService.paginate(items.length, page, pageSize, maxPages);
 
@@ -108,13 +108,13 @@ class Pagination extends React.Component {
         var pager = this.state.pager;
         var labels = this.props.labels;
         var styles = this.styles;
-        var pageSize=this.state.pageSize;
+        var pageSize = pager.pageSize;
 
         if (!pager.pages || pager.pages.length <= 1) {
             // don't display pager if there is only 1 page
             return null;
         }
-            
+
         return (
             <>
                 <div className="row">
