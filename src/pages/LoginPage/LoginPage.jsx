@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { userActions } from '../../_actions';
-import './login-page.scss';
+import './loginPage.scss';
 
 function LoginPage() {
     const [inputs, setInputs] = useState({
@@ -17,8 +16,8 @@ function LoginPage() {
     const location = useLocation();
 
     // reset login status
-    useEffect(() => { 
-        dispatch(userActions.logout()); 
+    useEffect(() => {
+        dispatch(userActions.logout());
     }, []);
 
     function handleChange(e) {
@@ -26,9 +25,9 @@ function LoginPage() {
         setInputs(inputs => ({ ...inputs, [name]: value }));
     }
 
+    
     function handleSubmit(e) {
         e.preventDefault();
-
         setSubmitted(true);
         if (username && password) {
             // get return url from location state or default to home page
@@ -38,31 +37,47 @@ function LoginPage() {
     }
 
     return (
-        <div className="login-page col-lg-8 offset-lg-2">
-            <h2>Login</h2>
+        <div className="col-md-8 offset-md-2">
+        <div className="login-page col-lg-8 offset-lg-2 paper">
+            <h2 className="red padding">Login</h2>
             <form name="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" value={username} onChange={handleChange} className={'form-control' + (submitted && !username ? ' is-invalid' : '')} />
+                    <div className="input-group mb-3">
+                        <input type="text" name="username" value={username} onChange={handleChange} className={'form-control' + (submitted && !username ? ' is-invalid' : '')} />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">
+                                <i className="bi bi-person-circle"></i>
+                            </span>
+                        </div>
+                    </div>
                     {submitted && !username &&
                         <div className="invalid-feedback">Username is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                    <div className="input-group mb-3">
+                        <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                        <div className="input-group-prepend">
+                            <span className="input-group-text" id="basic-addon1">
+                                <i className="bi bi-lock-fill"></i>
+                            </span>
+                        </div>
+                    </div>
                     {submitted && !password &&
                         <div className="invalid-feedback">Password is required</div>
                     }
                 </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">
+                <div className="form-group float-right">
+                    <button className="btn btn-outline-dark btn-lg">
                         {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
-                    <Link to="/register" className="btn btn-link">Register</Link>
+                    <Link to="/register" className="red btn btn-link">Register</Link>
                 </div>
             </form>
+        </div>
         </div>
     );
 }

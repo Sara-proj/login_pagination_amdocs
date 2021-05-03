@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { paginateService } from './paginate.service';
+import './pagination.scss';
 
 const propTypes = {
     items: PropTypes.array.isRequired,
     onChangePage: PropTypes.func.isRequired,
     initialPage: PropTypes.number,
-    pageSize: PropTypes.number,
+    //pageSize: PropTypes.number,
     maxPages: PropTypes.number,
     labels: PropTypes.object,
     styles: PropTypes.object,
@@ -15,7 +16,7 @@ const propTypes = {
 
 const defaultProps = {
     initialPage: 1,
-    pageSize: 10,
+   // pageSize: 10,
     maxPages: 10,
     labels: {
         first: 'First',
@@ -26,9 +27,10 @@ const defaultProps = {
 }
 
 class Pagination extends React.Component {
+
     constructor(props) {
         super(props);
-        this.state = { pager: {} };
+        this.state = { pager: {},pageSize:10 };
         this.styles = {};
 
         if (!props.disableDefaultStyles) {
@@ -47,7 +49,8 @@ class Pagination extends React.Component {
                     cursor: 'pointer',
                     padding: '6px 12px',
                     display: 'block',
-                    float: 'left'
+                    float: 'left',
+                    border:"solid black 2px"
                 }
             }
         }
@@ -60,6 +63,7 @@ class Pagination extends React.Component {
                 a: { ...this.styles.a, ...props.styles.a }
             };
         }
+        this.changePageSize=this.changePageSize.bind(this);
     }
 
     componentWillMount() {
@@ -76,10 +80,17 @@ class Pagination extends React.Component {
         }
     }
 
-    setPage(page) {
-        var { items, pageSize, maxPages } = this.props;
+    changePageSize(event) {
         var pager = this.state.pager;
+        this.setState({pageSize:event.target.value});
+        this.setPage(pager.currentPage,event.target.value);
+    
+    }
 
+    setPage(page,size) {
+        var { items, maxPages } = this.props;
+        var pager = this.state.pager;
+        var pageSize=size?size:this.state.pageSize;
         // get new pager object for specified page
         pager = paginateService.paginate(items.length, page, pageSize, maxPages);
 
@@ -97,34 +108,45 @@ class Pagination extends React.Component {
         var pager = this.state.pager;
         var labels = this.props.labels;
         var styles = this.styles;
+        var pageSize=this.state.pageSize;
 
         if (!pager.pages || pager.pages.length <= 1) {
             // don't display pager if there is only 1 page
             return null;
         }
-
+            
         return (
-          <>
-            <ul className="pagination" style={styles.ul}>
-                <li className={`page-item first ${pager.currentPage === 1 ? 'disabled' : ''}`} style={styles.li}>
-                    <a className="page-link" onClick={() => this.setPage(1)} style={styles.a}>{labels.first}</a>
-                </li>
-                <li className={`page-item previous ${pager.currentPage === 1 ? 'disabled' : ''}`} style={styles.li}>
-                    <a className="page-link" onClick={() => this.setPage(pager.currentPage - 1)} style={styles.a}>{labels.previous}</a>
-                </li>
-                {pager.pages.map((page, index) =>
-                    <li key={index} className={`page-item page-number ${pager.currentPage === page ? 'active' : ''}`} style={styles.li}>
-                        <a className="page-link" onClick={() => this.setPage(page)} style={styles.a}>{page}</a>
-                    </li>
-                )}
-                <li className={`page-item next ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`} style={styles.li}>
-                    <a className="page-link" onClick={() => this.setPage(pager.currentPage + 1)} style={styles.a}>{labels.next}</a>
-                </li>
-                <li className={`page-item last ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`} style={styles.li}>
-                    <a className="page-link" onClick={() => this.setPage(pager.totalPages)} style={styles.a}>{labels.last}</a>
-                </li>
-            </ul>
-            {pager.currentPage} / {pager.totalPages}
+            <>
+                <div className="row">
+                    <div className="col-8">
+                        <ul className="pagination" >
+                            <li className={`nav page-item first ${pager.currentPage === 1 ? 'disabled' : ''}`} style={styles.li}>
+                                <a className="page-link" onClick={() => this.setPage(1)} style={styles.a}>{labels.first}</a>
+                            </li>
+                            <li className={`nav page-item previous ${pager.currentPage === 1 ? 'disabled' : ''}`} style={styles.li}>
+                                <a className="page-link" onClick={() => this.setPage(pager.currentPage - 1)} style={styles.a}>{labels.previous}</a>
+                            </li>
+                            {pager.pages.map((page, index) =>
+                                <li key={index} className={`page-item page-number ${pager.currentPage === page ? 'active' : ''}`} style={styles.li}>
+                                    <a className="page-link" onClick={() => this.setPage(page)} style={styles.a}>{page}</a>
+                                </li>
+                            )}
+                            <li className={`nav page-item next ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`} style={styles.li}>
+                                <a className="page-link" onClick={() => this.setPage(pager.currentPage + 1)} style={styles.a}>{labels.next}</a>
+                            </li>
+                            <li className={`nav page-item last ${pager.currentPage === pager.totalPages ? 'disabled' : ''}`} style={styles.li}>
+                                <a className="page-link" onClick={() => this.setPage(pager.totalPages)} style={styles.a}>{labels.last}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="col-3">
+                        <input type="number" value={pageSize} max={this.props.settings.max} step={this.props.settings.step} min={this.props.settings.min} onChange={this.changePageSize} />
+                        <label> per page </label>
+                    </div>
+                    <div className="col-1 info">
+                        {pager.currentPage} / {pager.totalPages}
+                    </div>
+                </div>
             </>
         );
     }

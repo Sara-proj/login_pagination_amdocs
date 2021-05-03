@@ -1,0 +1,16 @@
+.completed {
+    color: rgb(251, 255, 6);
+}
+.task {
+    color: rgb(53, 55, 58);
+}
+td,
+th {
+    width: 7vw;
+}
+.scroll {
+    max-height: 70vh;
+    overflow-y: scroll;
+    min-width: 60vw;
+    margin-bottom: 4vh;
+}

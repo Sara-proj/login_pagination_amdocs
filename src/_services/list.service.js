@@ -1,3 +1,4 @@
+  
 import config from 'config';
 
 export const listService = {
@@ -13,7 +14,9 @@ function getAll() {
         headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.listUrl}/todos`, requestOptions).then(handleResponse);
+    return fetch(`${config.listUrl}/todos`, requestOptions)
+        .then(handleResponse)
+        .then(addMockPositions);
 }
 
 function getById(id) {
@@ -56,3 +59,23 @@ function handleResponse(response) {
         return data;
     });
 }
+
+function addMockPositions(data) {
+    data.forEach(object => {
+        object.positions = [getRandomPosition(), getRandomPosition()]
+    });
+    return data;
+}
+
+function getRandomPosition() {
+    return {
+        lat: getRandomNumber(43.655000, 43.656999),
+        lng: getRandomNumber(-79.380000, -79.380999)
+    }
+
+}
+
+function getRandomNumber(min, max) {
+    return +(Math.random() * (max - min) + min).toFixed(6)
+}
+

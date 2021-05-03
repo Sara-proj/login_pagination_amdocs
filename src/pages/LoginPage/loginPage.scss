@@ -1,0 +1,25 @@
+.red {
+    color: #c72a2a;
+    text-align: center;
+    :focus,
+    :hover {
+      color: rgb(19, 9, 9);
+    }
+  }
+  
+  .login-page {
+    padding-bottom: 3px;
+    label {
+      font-weight: bold;
+    }
+  }
+  .paper {
+    padding: 3vh 3vw;
+    border-radius: 8px;
+    border: 1px solid #dadce0;
+    height: 60vh;
+  }
+  .padding{
+    margin-top: 10vh;
+    margin-bottom: 2vh;
+  }

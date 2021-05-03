@@ -9,11 +9,11 @@ import { HomePage } from 'root/pages/HomePage';
 import { LoginPage } from 'root/pages/LoginPage';
 import { RegisterPage } from 'root/pages/RegisterPage';
 import { ListPage } from 'root/pages/ListPage';
-
+import {ListMap} from 'root/pages/ListMap';
+import './App.scss';
 function App() {
     const alert = useSelector(state => state.alert);
     const dispatch = useDispatch();
-
     useEffect(() => {
         history.listen((location, action) => {
             // clear alert on location change
@@ -22,24 +22,25 @@ function App() {
     }, []);
 
     return (
-        <div className="jumbotron">
+        <div className="jumbotron main">
             <div className="container">
                 <div className="col-md-8 offset-md-2">
                     {alert.message &&
                         <div className={`alert ${alert.type}`}>{alert.message}</div>
                     }
+                    </div>
                     <Router history={history}>
                         <Switch>
                             <PrivateRoute exact path="/" component={HomePage} />
                             <Route path="/login" component={LoginPage} />
                             <Route path="/register" component={RegisterPage} />
                             <Route path="/list" component={ListPage} />
+                            <Route path="/maps" component={ListMap} />
                             <Redirect from="*" to="/" />
                         </Switch>
                     </Router>
                 </div>
             </div>
-        </div>
     );
 }
 
