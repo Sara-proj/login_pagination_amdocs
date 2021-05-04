@@ -26,7 +26,7 @@ function MapPosition({ positions }) {
   return (
     <GoogleMap
       key={new Date().getTime()}
-      defaultZoom={15}
+      defaultZoom={1}
       defaultCenter={{ lat: 43.6561, lng: -79.3802 }}
     >
       {positions.map((position) => {

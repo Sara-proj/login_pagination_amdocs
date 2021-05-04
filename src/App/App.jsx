@@ -10,7 +10,7 @@ import { RegisterPage } from 'root/pages/RegisterPage';
 import { ListPage } from 'root/pages/ListPage';
 import { ListMap } from 'root/pages/ListMap';
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-
+import NavBar from '../_components/NavBar/NavBar';
 import './App.scss';
 function App() {
     const alert = useSelector(state => state.alert);
@@ -25,34 +25,8 @@ function App() {
     return (
         <div className="jumbotron main">
             <div className="container">
-                <div className="col-md-8 offset-md-2">
-                    {alert.message &&
-                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-                    }
-                </div>
-                <Navbar bg="light" expand="lg">
-                    <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#link">Link</Nav.Link>
-                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Form inline>
-                            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                            <Button variant="outline-success">Search</Button>
-                        </Form>
-                    </Navbar.Collapse>
-                </Navbar>
-
                 <Router history={history}>
+                    <NavBar />
                     <Switch>
                         <PrivateRoute exact path="/" component={HomePage} />
                         <Route path="/login" component={LoginPage} />
@@ -62,6 +36,11 @@ function App() {
                         <Redirect from="*" to="/" />
                     </Switch>
                 </Router>
+                {/* <div className="alert col-md-5 col-lg-1 offset-md-1 center">
+                    {alert.message &&
+                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                    }
+                </div> */}
             </div>
         </div>
     );

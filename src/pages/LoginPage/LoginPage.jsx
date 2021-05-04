@@ -25,7 +25,7 @@ function LoginPage() {
         setInputs(inputs => ({ ...inputs, [name]: value }));
     }
 
-    
+
     function handleSubmit(e) {
         e.preventDefault();
         setSubmitted(true);
@@ -38,46 +38,46 @@ function LoginPage() {
 
     return (
         <div className="col-md-8 offset-md-2">
-        <div className="login-page col-lg-8 offset-lg-2 paper">
-            <h2 className="red padding">Login</h2>
-            <form name="form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Username</label>
-                    <div className="input-group mb-3">
-                        <input type="text" name="username" value={username} onChange={handleChange} className={'form-control' + (submitted && !username ? ' is-invalid' : '')} />
-                        <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">
-                                <i className="bi bi-person-circle"></i>
-                            </span>
+            <div className="login-page col-lg-8 offset-lg-2 paper">
+                <h2 className="red padding">Login</h2>
+                <form name="form" onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Username</label>
+                        <div className="input-group mb-3">
+                            <input type="text" name="username" value={username} onChange={handleChange} className={'form-control' + (submitted && !username ? ' is-invalid' : '')} />
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <i className="bi bi-person-circle"></i>
+                                </span>
+                            </div>
                         </div>
+                        {submitted && !username &&
+                            <div className="invalid-feedback">Username is required</div>
+                        }
                     </div>
-                    {submitted && !username &&
-                        <div className="invalid-feedback">Username is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <div className="input-group mb-3">
-                        <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
-                        <div className="input-group-prepend">
-                            <span className="input-group-text" id="basic-addon1">
-                                <i className="bi bi-lock-fill"></i>
-                            </span>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <div className="input-group mb-3">
+                            <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                            <div className="input-group-prepend">
+                                <span className="input-group-text" id="basic-addon1">
+                                    <i className="bi bi-lock-fill"></i>
+                                </span>
+                            </div>
                         </div>
+                        {submitted && !password &&
+                            <div className="invalid-feedback">Password is required</div>
+                        }
                     </div>
-                    {submitted && !password &&
-                        <div className="invalid-feedback">Password is required</div>
-                    }
-                </div>
-                <div className="form-group float-right">
-                    <button className="btn btn-outline-dark btn-lg">
-                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    <div className="form-group float-right">
+                        <button className="btn btn-outline-dark btn-lg">
+                            {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Login
                     </button>
-                    <Link to="/register" className="red btn btn-link">Register</Link>
-                </div>
-            </form>
-        </div>
+                        <Link to="/register" className="red btn btn-link">Register</Link>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

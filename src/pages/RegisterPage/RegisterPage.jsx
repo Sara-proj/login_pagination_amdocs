@@ -32,12 +32,12 @@ function RegisterPage() {
     function handleSubmit(e) {
         e.preventDefault();
         setSubmitted(true);
-        if (user.firstName && user.lastName && user.username && user.validation.password) {
+        if (user.firstName && user.lastName && user.username && validation.password) {
             dispatch(userActions.register(user));
         }
     }
     function validatePassword(score) {
-        setValidation(score >= MIN_STRENGTH)
+        setValidation({ password: score >= MIN_STRENGTH });
     }
     return (
         <div className="col-md-8 offset-md-2">

@@ -119,7 +119,7 @@ class Pagination extends React.Component {
             <>
                 <div className="row">
                     <div className="col-8">
-                        <ul className="pagination" >
+                        <ul className="pagination col-8"  >
                             <li className={`nav page-item first ${pager.currentPage === 1 ? 'disabled' : ''}`} style={styles.li}>
                                 <a className="page-link" onClick={() => this.setPage(1)} style={styles.a}>{labels.first}</a>
                             </li>
@@ -139,12 +139,14 @@ class Pagination extends React.Component {
                             </li>
                         </ul>
                     </div>
-                    <div className="col-3">
+                </div>
+                <div className="row">
+                    <div className="col-10">
                         <input type="number" value={pageSize} max={this.props.settings.max} step={this.props.settings.step} min={this.props.settings.min} onChange={this.changePageSize} />
                         <label> per page </label>
                     </div>
-                    <div className="col-1 info">
-                        {pager.currentPage} / {pager.totalPages}
+                    <div className="col-2 info">
+                        <label>{pager.currentPage} / {pager.totalPages}</label>
                     </div>
                 </div>
             </>
